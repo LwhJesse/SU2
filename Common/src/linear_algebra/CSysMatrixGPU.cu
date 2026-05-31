@@ -176,5 +176,14 @@ void CSysMatrix<ScalarType>::GPUMatrixVectorProduct(const CSysVector<ScalarType>
 
   prod.DtHTransfer();
 }
+template void CSysMatrix<su2mixedfloat>::HtDTransfer(bool trigger) const;
+template void CSysMatrix<su2mixedfloat>::GPUMatrixVectorProduct(const CSysVector<su2mixedfloat>& vec,
+                                                                CSysVector<su2mixedfloat>& prod, CGeometry* geometry,
+                                                                const CConfig* config) const;
 
-template class CSysMatrix<su2mixedfloat>; //This is a temporary fix for invalid instantiations due to separating the member function from the header file the class is defined in. Will try to rectify it in coming commits.
+#if defined(USE_MIXED_PRECISION) && !defined(USE_SINGLE_PRECISION)
+template void CSysMatrix<passivedouble>::HtDTransfer(bool trigger) const;
+template void CSysMatrix<passivedouble>::GPUMatrixVectorProduct(const CSysVector<passivedouble>& vec,
+                                                                CSysVector<passivedouble>& prod, CGeometry* geometry,
+                                                                const CConfig* config) const;
+#endif
